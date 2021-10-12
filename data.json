@@ -1,5 +1,5 @@
 {
-  filters: [
+  "filters": [
       { "color": "red", "isEnabled": "false" },
       { "color": "green", "isEnabled": "true" },
       { "color": "blue", "isEnabled": "false" }
