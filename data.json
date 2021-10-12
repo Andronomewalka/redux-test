@@ -1,12 +1,7 @@
 {
   filters: [
-    "green" : true,
-    "red" : false,
-    "blue" : false
-  ],
-  list: [
-    { "first", 10 },
-    { "second", 20 },
-    { "third", 30 }
+      { "color": "red", "isEnabled": "false" },
+      { "color": "green", "isEnabled": "true" },
+      { "color": "blue", "isEnabled": "false" }
   ]
 }
