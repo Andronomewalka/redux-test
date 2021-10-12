@@ -1,7 +1,7 @@
 {
   "filters": [
-      { "color": "red", "isEnabled": false },
-      { "color": "green", "isEnabled": true },
-      { "color": "blue", "isEnabled": false }
+      { "id": 0, "color": "red", "isEnabled": false },
+      { "id": 1, "color": "green", "isEnabled": true },
+      { "id": 2, "color": "blue", "isEnabled": false }
   ]
 }
