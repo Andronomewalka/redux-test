@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import requestStatus from "@/utils/requestStatus";
 import { useMultipleSelector } from "./useMultipleSelector";
 
+//some
 export const useQuery = (
   dataSelector,
   statusSelector,
