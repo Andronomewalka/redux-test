@@ -1,0 +1,33 @@
+{
+  "name": "next-redux",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@reduxjs/toolkit": "^1.6.2",
+    "classnames": "^2.3.1",
+    "formik": "^2.2.9",
+    "nanoid": "^3.1.29",
+    "next": "11.1.2",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-loader-spinner": "^4.0.0",
+    "react-redux": "^7.2.5",
+    "sass": "^1.42.1",
+    "tailwindcss": "^2.2.16",
+    "yup": "^0.32.11"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.3.7",
+    "eslint": "^8.0.1",
+    "eslint-config-next": "11.1.2",
+    "postcss": "^8.3.9",
+    "postcss-import": "^14.0.2",
+    "stylelint-config-recommended": "^5.0.0"
+  }
+}

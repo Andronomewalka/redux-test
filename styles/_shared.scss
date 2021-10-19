@@ -1,0 +1,36 @@
+.delete,
+.cancel,
+.submit {
+    @apply px-4 py-2 text-center rounded-md text-white;
+
+    height: 40px;
+    box-shadow: 0px 4px 20px 10px rgba(219, 234, 254, 0.3);
+    transition: background-color 1s ease;
+}
+
+.delete {
+    @apply bg-red-600;
+
+    &:focus,
+    &:hover {
+        @apply bg-red-700;
+     }
+}
+
+.cancel {
+    @apply ml-auto mr-2 bg-gray-400;
+
+    &:focus,
+    &:hover {
+        @apply bg-gray-500;
+     }
+}
+
+.submit {
+    @apply bg-blue-600 cursor-pointer;
+
+    &:focus,
+    &:hover {
+        @apply bg-blue-700;
+    }
+}

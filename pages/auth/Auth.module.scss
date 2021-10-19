@@ -1,0 +1,72 @@
+.container {
+    @apply h-full flex flex-col items-center;
+
+    .viewContainer {
+        @apply relative h-full w-full;
+
+        .signInView,
+        .signUpView {
+            @apply absolute m-auto;
+            top: 50%;
+            left: 50%;
+            transition: all 0.4s ease-in-out;
+        }
+
+        .signInView {
+            @apply opacity-0;
+
+            transform: translate(-150%, -50%);
+
+            &.is-signInViewSelected {
+                @apply opacity-100;
+
+                transform: translate(-50%, -50%);
+            }
+        }
+
+        .signUpView {
+            @apply opacity-100;
+
+            transform: translate(-50%, -50%);
+
+            &.is-signInViewSelected {
+                @apply opacity-0;
+
+                transform: translate(150%, -50%);
+            }
+        }
+    }
+
+    .toSignIn {
+        @apply mb-2 border-b-2 border-gray-500; 
+
+        transition: all 0.3s ease-in-out;
+
+        &::before,
+        &::after {
+            transition: all 0.3s ease-in-out;
+        }
+
+        &.is-signInViewSelected::after {
+            content: ' Up >';
+        }
+
+        &:not(.is-signInViewSelected)::after {
+            content: ' In ';
+        }
+
+        &:not(.is-signInViewSelected)::before {
+            content: '< ';
+        }
+
+        &:hover,
+        &:active {
+            @apply border-blue-500; 
+
+            &::before,
+            &::after {
+                    @apply text-blue-500; 
+            }
+        }
+    }
+}
