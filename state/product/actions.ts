@@ -1,14 +1,17 @@
+import { CaseReducer, PayloadAction } from "@reduxjs/toolkit"
+import { Product, ProductState } from './types'
 import { nanoid } from "nanoid";
+import { WritableDraft } from "immer/dist/internal";
 
-export const productAddedInternal = {
-  reducer: (state, action) => {
+export const productAddedCase : any = {
+  reducer: (state: any, action: any) => {
     try {
       state.products.unshift(action.payload);
-    } catch (err) {
+    } catch (err: any) {
       console.log("productAdded reducer err", err);
     }
   },
-  prepare: (product) => {
+  prepare: (product: Product) => {
     try {
       product.id = nanoid();
       return { payload: product };
@@ -18,7 +21,7 @@ export const productAddedInternal = {
   },
 };
 
-export const productRemovedInternal = (state, action) => {
+export const productRemovedCase: CaseReducer<ProductState, PayloadAction<number>> = (state, action) => {
   try {
     const productId = action.payload;
     state.products = state.products.filter((cur) => cur.id !== productId);
@@ -27,7 +30,7 @@ export const productRemovedInternal = (state, action) => {
   }
 };
 
-export const productChangedInternal = (state, action) => {
+export const productChangedCase: CaseReducer<ProductState, PayloadAction<Product>> = (state, action) => {
   try {
     const product = action.payload;
     const productIndex = state.products.findIndex(

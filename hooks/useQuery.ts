@@ -1,9 +1,8 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import requestStatus from "@/utils/requestStatus";
+import { RequestStatus } from "utils/requestStatus";
 import { useMultipleSelector } from "./useMultipleSelector";
 
-//some
 export const useQuery = (
   dataSelector,
   statusSelector,
@@ -19,7 +18,7 @@ export const useQuery = (
   );
 
   useEffect(() => {
-    if (status === requestStatus.idle && typeof queryThunk === "function") {
+    if (status === RequestStatus.Idle && typeof queryThunk === "function") {
       dispatch(queryThunk(queryThunkArg));
     }
   }, [status, dispatch]);

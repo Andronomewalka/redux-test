@@ -1,12 +1,13 @@
+import type { NextPage } from "next";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import cx from "classnames";
-import SignIn from "@/components/Auth/SignIn";
-import SignUp from "@/components/Auth/SignUp";
+import SignIn from "components/Auth/SignIn";
+import SignUp from "components/Auth/SignUp";
 import styles from "./Auth.module.scss";
-import { validationErrorChanged } from "@/state/auth";
+import { validationErrorChanged } from "state/auth";
 
-export default function AuthPage() {
+const AuthPage: NextPage = () => {
   const dispatch = useDispatch();
   const [isSignIn, setIsSignIn] = useState(true);
 
@@ -39,4 +40,6 @@ export default function AuthPage() {
       </button>
     </div>
   );
-}
+};
+
+export default AuthPage;

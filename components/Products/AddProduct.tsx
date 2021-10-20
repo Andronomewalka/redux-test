@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { productAdded } from "@/state/product";
+import { productAdded } from "state/product";
 import styles from "./Products.module.scss";
 
-export default function AddProduct() {
+const AddProduct: React.FC = () => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
 
@@ -17,14 +17,12 @@ export default function AddProduct() {
   return (
     <form className={styles.addProductContainer} onSubmit={onSubmitAdd}>
       <textarea
-        type="text"
         placeholder="Name"
         className={styles.title}
         value={name}
         onChange={(e) => void setName(e.target.value)}
       />
       <textarea
-        type="text"
         placeholder="Description"
         className={styles.description}
         value={description}
@@ -33,4 +31,6 @@ export default function AddProduct() {
       <input type="submit" className={styles.submit} value="Add product" />
     </form>
   );
-}
+};
+
+export default AddProduct;

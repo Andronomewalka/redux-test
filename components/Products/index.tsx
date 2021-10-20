@@ -4,14 +4,14 @@ import {
   selectProducts,
   selectFetchStatus,
   selectError,
-} from "@/state/product";
-import { useQuery } from "@/hooks/useQuery.js";
-import requestStatus from "@/utils/requestStatus";
+} from "state/product";
+import { useQuery } from "hooks/useQuery";
+import { RequestStatus } from "utils/requestStatus";
 import styles from "./Products.module.scss";
-import Product from "./Product.js";
+import Product from "./Product";
 import AddProduct from "./AddProduct";
 
-export default function Products() {
+const Products: React.FC = () => {
   const [products, status, error] = useQuery(
     selectProducts,
     selectFetchStatus,
@@ -21,9 +21,9 @@ export default function Products() {
 
   return (
     <>
-      {status === requestStatus.requesting && "requesting..."}
-      {status === requestStatus.error && `error - ${error}`}
-      {status === requestStatus.succeeded && (
+      {status === RequestStatus.Requesting && "requesting..."}
+      {status === RequestStatus.Failed && `error - ${error}`}
+      {status === RequestStatus.Succeeded && (
         <div className={styles.container}>
           <AddProduct />
           <ul className={styles.cards}>
@@ -35,4 +35,6 @@ export default function Products() {
       )}
     </>
   );
-}
+};
+
+export default Products;

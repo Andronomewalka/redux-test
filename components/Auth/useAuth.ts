@@ -1,7 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, RefObject } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
-import { useMultipleSelector } from "@/hooks/useMultipleSelector";
+import { FormikHelpers, FormikProps } from 'formik'
+import { UseAuthResult, SubmitProp, SignInFormValues, SignUpFormValues } from "./types";
+import { useMultipleSelector } from "hooks/useMultipleSelector";
+import { useAppSelector } from "hooks/useAppSelector";
 import {
   signIn,
   signUp,
@@ -11,9 +14,9 @@ import {
   selectError,
   selectValidationError,
   selectIsSignedIn,
-} from "@/state/auth";
+} from "state/auth";
 
-export const useAuth = (formikRef) => {
+export const useAuth = <T>(formikRef: RefObject<FormikProps<SubmitProp<T>>>): UseAuthResult  => {
   const dispatch = useDispatch();
   const router = useRouter();
   const isSignedIn = useSelector(selectIsSignedIn);
@@ -30,12 +33,13 @@ export const useAuth = (formikRef) => {
   }, [isSignedIn]);
 
   useEffect(() => {
-    formikRef.current.setFieldValue("email", email);
+    formikRef.current?.setFieldValue("email", email);
   }, [email]);
 
   const validationError = useSelector(selectValidationError);
 
-  const onSignInSubmit = (data, { setSubmitting }) => {
+
+  const onSignInSubmit = (data: SignInFormValues, {setSubmitting}: FormikHelpers<SignInFormValues>) => {
     setSubmitting(true);
     (async () => {
       await dispatch(signIn(data));
@@ -43,7 +47,7 @@ export const useAuth = (formikRef) => {
     })();
   };
 
-  const onSignUpSubmit = (data, { setSubmitting }) => {
+  const onSignUpSubmit = (data: SignUpFormValues, {setSubmitting}: FormikHelpers<SignUpFormValues>) => {
     setSubmitting(true);
     (async () => {
       if (data.password === data.confPassword) {

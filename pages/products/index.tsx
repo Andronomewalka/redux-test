@@ -1,11 +1,12 @@
+import type { NextPage } from "next";
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/router";
-import Products from "@/components/Products";
-import { selectEmail, signOut } from "@/state/auth";
+import Products from "components/Products";
+import { selectEmail, signOut } from "state/auth";
 import styles from "./products.module.scss";
 
-export default function ProductsPage() {
+const ProductsPage: NextPage = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const email = useSelector(selectEmail);
@@ -26,4 +27,6 @@ export default function ProductsPage() {
       <Products />
     </div>
   );
-}
+};
+
+export default ProductsPage;

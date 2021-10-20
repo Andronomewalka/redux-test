@@ -2,20 +2,16 @@ import React, { useRef } from "react";
 import { Formik, Form, Field } from "formik";
 import cx from "classnames";
 import Loader from "react-loader-spinner";
-import requestStatus from "@/utils/requestStatus";
+import { RequestStatus } from "utils/requestStatus";
+import { ClassNameProp } from "utils/basePropTypes";
+import { useAuth } from "./useAuth";
+import { SignInFormValues } from "./types";
 import styles from "./Auth.module.scss";
-import { useAuth } from "./useAuth.js";
-import * as Yup from "yup";
 
-export default function SignUp({ className }) {
-  const formikRef = useRef();
-  const { email, status, error, validationError, onSignUpSubmit } =
-    useAuth(formikRef);
-
-  const SignUpSchema = Yup.object().shape({
-    email: Yup.string().email("Invalid email").required("Required"),
-    password: Yup.string().min(4, "At least 4 characters").required("Required"),
-  });
+const SignIn: React.FC<ClassNameProp> = ({ className }) => {
+  const formikRef = useRef(null);
+  const { email, status, error, validationError, onSignInSubmit } =
+    useAuth<SignInFormValues>(formikRef);
 
   return (
     <div className={className}>
@@ -24,13 +20,10 @@ export default function SignUp({ className }) {
         initialValues={{
           email: email === null ? "" : email,
           password: "",
-          confPassword: "",
         }}
-        validationSchema={SignUpSchema}
-        validateOnChange
-        onSubmit={onSignUpSubmit}
+        onSubmit={onSignInSubmit}
       >
-        {({ errors, touched, isSubmitting }) => (
+        {({ isSubmitting }) => (
           <Form className={styles.container}>
             <label className={styles.label}>
               Email Address
@@ -40,32 +33,13 @@ export default function SignUp({ className }) {
                 placeholder="Email"
                 className={styles.input}
               />
-              {errors.email && touched.email ? (
-                <div className={styles.fieldValidationError}>
-                  {errors.email}
-                </div>
-              ) : null}
             </label>
             <label className={styles.label}>
-              Create password
+              Your password
               <Field
                 name="password"
                 type="password"
                 placeholder="Password"
-                className={styles.input}
-              />
-              {errors.password && touched.password ? (
-                <div className={styles.fieldValidationError}>
-                  {errors.password}
-                </div>
-              ) : null}
-            </label>
-            <label className={styles.label}>
-              Confirm password
-              <Field
-                name="confPassword"
-                type="password"
-                placeholder="Confirm password"
                 className={styles.input}
               />
             </label>
@@ -73,15 +47,15 @@ export default function SignUp({ className }) {
               type="submit"
               disabled={isSubmitting}
               className={cx(styles.submit, {
-                [styles["is-disabled"]]: status === requestStatus.requesting,
+                [styles["is-disabled"]]: status === RequestStatus.Requesting,
               })}
-              value="Sign Up"
+              value="Sign In"
             />
 
             <div className={styles.requestInfoContainer}>
               <div
                 className={cx(styles.requesting, {
-                  [styles["is-visible"]]: status === requestStatus.requesting,
+                  [styles["is-visible"]]: status === RequestStatus.Requesting,
                 })}
               >
                 <Loader type="Bars" color="#00BFFF" height={40} />
@@ -89,7 +63,7 @@ export default function SignUp({ className }) {
               <div
                 className={cx(styles.error, {
                   [styles["is-visible"]]:
-                    status !== requestStatus.requesting &&
+                    status !== RequestStatus.Requesting &&
                     (validationError || error),
                 })}
               >
@@ -101,4 +75,6 @@ export default function SignUp({ className }) {
       </Formik>
     </div>
   );
-}
+};
+
+export default SignIn;

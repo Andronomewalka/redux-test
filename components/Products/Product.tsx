@@ -1,30 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, SyntheticEvent } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   productRemoved,
   productChanged,
   selectProductById,
-} from "@/state/product";
+} from "state/product";
+import { IdProp } from "utils/basePropTypes";
 import styles from "./Products.module.scss";
 
-export default function Product({ id }) {
+const Product: React.FC<IdProp> = ({ id }) => {
   const dispatch = useDispatch();
   const product = useSelector(selectProductById(id));
   const [name, setName] = useState(product.name);
   const [description, setDescription] = useState(product.description);
 
-  const onDeleteProduct = (e) => {
+  const onDeleteProduct = (e: SyntheticEvent) => {
     e.preventDefault();
     dispatch(productRemoved(product.id));
   };
 
-  const onCancelProduct = (e) => {
+  const onCancelProduct = (e: SyntheticEvent) => {
     e.preventDefault();
     setName(product.name);
     setDescription(product.description);
   };
 
-  const onSubmitSave = (e) => {
+  const onSubmitSave = (e: SyntheticEvent) => {
     e.preventDefault();
     dispatch(productChanged({ ...product, name, description }));
   };
@@ -32,7 +33,6 @@ export default function Product({ id }) {
   return (
     <form className={styles.card} onSubmit={onSubmitSave}>
       <textarea
-        type="text"
         className={styles.title}
         value={name}
         onChange={(e) => void setName(e.target.value)}
@@ -53,4 +53,6 @@ export default function Product({ id }) {
       </div>
     </form>
   );
-}
+};
+
+export default Product;
