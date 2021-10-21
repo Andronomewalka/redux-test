@@ -21,7 +21,7 @@ export const productAddedCase : any = {
   },
 };
 
-export const productRemovedCase: CaseReducer<ProductState, PayloadAction<number>> = (state, action) => {
+export const productRemovedCase: CaseReducer<ProductState, PayloadAction<number | string>> = (state, action) => {
   try {
     const productId = action.payload;
     state.products = state.products.filter((cur) => cur.id !== productId);

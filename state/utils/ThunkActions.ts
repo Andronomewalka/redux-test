@@ -1,10 +1,7 @@
-import { CaseReducer, PayloadAction } from "@reduxjs/toolkit"
-import { WritableDraft } from "immer/dist/internal";
-import { UserState } from "state/auth";
+import { PayloadAction } from "@reduxjs/toolkit"
 
 export interface ThunkActions<State, PayloadType> {
-    pending(state: any, action: any): void,
-    fulfilled(state:any, action: any): void,
-    //fulfilled(state: WritableDraft<State>, action: PayloadAction<PayloadType>): void,
-    rejected(state: any, action: any): void
+    pending(state: State): void,
+    fulfilled(state: State, action: PayloadAction<PayloadType>): void,
+    rejected(state: State, action: PayloadAction<unknown>): void
 }

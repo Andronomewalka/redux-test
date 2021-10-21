@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { SyntheticEvent, useState } from "react";
 import { useDispatch } from "react-redux";
 import { productAdded } from "state/product";
 import styles from "./Products.module.scss";
@@ -9,9 +9,9 @@ const AddProduct: React.FC = () => {
 
   const dispatch = useDispatch();
 
-  const onSubmitAdd = (e) => {
+  const onSubmitAdd = (e: SyntheticEvent) => {
     e.preventDefault();
-    dispatch(productAdded({ name, description }));
+    dispatch(productAdded({ id: -1, name, description }));
   };
 
   return (

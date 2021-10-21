@@ -15,12 +15,13 @@ import {
   selectValidationError,
   selectIsSignedIn,
 } from "state/auth";
+import { RequestStatus } from "utils/requestStatus";
 
 export const useAuth = <T>(formikRef: RefObject<FormikProps<SubmitProp<T>>>): UseAuthResult  => {
   const dispatch = useDispatch();
   const router = useRouter();
   const isSignedIn = useSelector(selectIsSignedIn);
-  const [email, status, error] = useMultipleSelector(
+  const [email, status, error] = useMultipleSelector<string, string>(
     selectEmail,
     selectFetchStatus,
     selectError

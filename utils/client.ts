@@ -1,7 +1,7 @@
-export async function client(endpoint, { body, ...customConfig } = {}) {
+export async function client(endpoint: string, { body, ...customConfig }: any = {}) {
   const headers = {
     "Content-Type": "application/json",
-    Authorization: "token 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",
+    Authorization: "token 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",
   };
 
   const config = {
@@ -25,25 +25,15 @@ export async function client(endpoint, { body, ...customConfig } = {}) {
       return data;
     }
     throw new Error(response.statusText);
-  } catch (err) {
+  } catch (err: any) {
     return Promise.reject(err.message ? err.message : data);
   }
 }
 
-client.get = function (endpoint, customConfig = {}) {
+client.get = function (endpoint: string, customConfig = {}) {
   return client(endpoint, { ...customConfig, method: "GET" });
 };
 
-client.post = function (endpoint, body, customConfig = {}) {
+client.post = function (endpoint: string, body: any, customConfig = {}) {
   return client(endpoint, { ...customConfig, body });
 };
-
-export async function getProducts() {
-  const response = await fetch(
-    "https://api.github.com/repos/Andronomewalka/redux-test/contents/products.json",
-    baseConfig
-  );
-
-  const data = await response.json();
-  return JSON.parse(atob(data.content));
-}

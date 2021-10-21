@@ -1,8 +1,8 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, nanoid, PayloadAction, PrepareAction } from "@reduxjs/toolkit";
 import { RequestStatus } from "utils/requestStatus";
 import * as cases from "./actions";
 import * as thunks from "./thunks";
-import { ProductState } from "./types";
+import { Product, ProductState } from "./types";
 
 const initialState: ProductState = {
   products: [],
@@ -14,7 +14,19 @@ const productsSlice = createSlice({
   name: "products",
   initialState,
   reducers: {
-    productAdded: cases.productAddedCase,
+    productAdded: {
+      reducer: (state: ProductState, action: PayloadAction<Product>) => {
+        try {
+          state.products.unshift(action.payload);
+        } catch (err: any) {
+          console.log("productAdded reducer err", err);
+        }
+      },
+      prepare: (product: Product) => {
+        product.id = nanoid();
+        return { payload: product };
+      },
+    },
     productRemoved: cases.productRemovedCase,
     productChanged: cases.productChangedCase,
   },

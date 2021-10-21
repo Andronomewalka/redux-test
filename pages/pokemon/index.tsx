@@ -9,7 +9,7 @@ const PokemonPage: NextPage = () => {
   return (
     <>
       {isLoading && "requesting..."}
-      {error && `error - ${error?.error}`}
+      {error && `error - ${error}`}
       {data && (
         <div>
           <h3>{data.species.name}</h3>

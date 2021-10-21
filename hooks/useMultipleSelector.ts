@@ -1,12 +1,14 @@
-import { useSelector } from "react-redux";
+import { RootState } from "state/store";
+import { useAppSelector } from "hooks/useAppSelector";
+import { RequestStatus } from "utils/requestStatus";
 
-export const useMultipleSelector = (
-  dataSelector,
-  statusSelector,
-  errorSelector
-) => {
-  const data = useSelector(dataSelector);
-  const status = useSelector(statusSelector);
-  const error = useSelector(errorSelector);
+export const useMultipleSelector = <TData, TError>(
+  dataSelector: (state: RootState) => TData,
+  statusSelector: (state: RootState) => RequestStatus,
+  errorSelector: (state: RootState) => TError,
+): [TData, RequestStatus, TError] => {
+  const data = useAppSelector(dataSelector) as TData;
+  const status = useAppSelector(statusSelector) as RequestStatus;
+  const error = useAppSelector(errorSelector) as TError;
   return [data, status, error];
 };

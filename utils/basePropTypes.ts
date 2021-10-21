@@ -1,11 +1,11 @@
 export interface ChildrenProp {
-    children: React.ReactNode
+    children: JSX.Element | null;
 }
 
 export interface ClassNameProp {
-    className?: string
+    className?: string;
 }
 
 export interface IdProp {
-    id: number
+    id: number | string;
 }

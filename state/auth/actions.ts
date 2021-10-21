@@ -5,7 +5,7 @@ export const validationErrorChangedCase: CaseReducer<UserState, PayloadAction<st
   state.validationError = action.payload; 
 }
 
-export const signOutCase: CaseReducer<UserState, PayloadAction<string>> = (state) => {
+export const signOutCase: CaseReducer<UserState> = (state) => {
   state.isSignedIn = false;
   state.email = "";
 }

@@ -9,10 +9,11 @@ import { useQuery } from "hooks/useQuery";
 import { RequestStatus } from "utils/requestStatus";
 import styles from "./Products.module.scss";
 import Product from "./Product";
+import { Product as ProductType } from "state/product";
 import AddProduct from "./AddProduct";
 
 const Products: React.FC = () => {
-  const [products, status, error] = useQuery(
+  const [products, status, error] = useQuery<ProductType[], string>(
     selectProducts,
     selectFetchStatus,
     selectError,
