@@ -24,7 +24,7 @@ const SignIn: React.FC<ClassNameProp> = ({ className }) => {
         onSubmit={onSignInSubmit}
       >
         {({ isSubmitting }) => (
-          <Form className={styles.container}>
+          <Form className={cx(styles.container, styles["shadow-box"])}>
             <label className={styles.label}>
               Email Address
               <Field

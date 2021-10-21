@@ -1,5 +1,3 @@
-const { getRedirectStatus } = require("next/dist/lib/load-custom-routes");
-
 const DEFAULT_PAGE = "/products";
 
 module.exports = {

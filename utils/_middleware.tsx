@@ -10,5 +10,5 @@ export default function Middleware({ children }: ChildrenProp) {
     dispatch(fetchLastUsedEmail());
   });
 
-  return children;
+  return <>{children}</>;
 }

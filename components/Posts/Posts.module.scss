@@ -1,0 +1,48 @@
+@import "../../styles/_shared.scss";
+
+.container {
+    @apply w-full h-full p-5;
+
+    .posts {
+        @apply flex flex-col items-stretch gap-5 mt-5;
+    }
+
+    .post {
+        @apply max-w-2xl p-4;
+
+        .form {
+            @apply w-full flex flex-row justify-between gap-2;
+
+            .label {
+                @apply block w-full;
+            }
+    
+            .title { 
+                @apply ml-1 p-2;
+            }
+    
+            .author {
+                @apply ml-1 p-2;
+            }
+    
+            .title,
+            .author {
+                @apply text-gray-500 border-b-2 outline-none;
+                transition: all 0.3s ease;
+    
+                &:hover, {
+                    @apply border-blue-200;
+    
+                 }
+    
+                &:focus, {
+                    @apply border-blue-500;
+                }
+            }
+
+            .buttonsContainer {
+                @apply flex flex-col gap-2;
+            }
+        }
+    }
+}

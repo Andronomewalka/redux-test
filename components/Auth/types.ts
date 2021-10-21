@@ -26,12 +26,3 @@ export interface UseAuthResult {
     onSignInSubmit(data: SignInFormValues, actions: FormikHelpers<SignInFormValues>): void,
     onSignUpSubmit(data: SignUpFormValues, actions: FormikHelpers<SignUpFormValues>): void,
 }
-
-// export interface FormikRef<T> extends
-//   RefObject<T>,
-//   FormikState<T>,
-//   FormikHelpers<T>, 
-//   FormikHandlers, 
-//   FormikComputedProps<T>, 
-//   FormikRegistration {
-// }

@@ -1,5 +1,7 @@
+import React from "react";
+
 export interface ChildrenProp {
-    children: JSX.Element | null;
+    children: JSX.Element | JSX.Element[];
 }
 
 export interface ClassNameProp {

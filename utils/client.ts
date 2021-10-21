@@ -1,7 +1,7 @@
 export async function client(endpoint: string, { body, ...customConfig }: any = {}) {
   const headers = {
     "Content-Type": "application/json",
-    Authorization: "token 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",
+    Authorization: "token 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",
   };
 
   const config = {

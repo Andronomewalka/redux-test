@@ -8,12 +8,12 @@ import {
 import { useQuery } from "hooks/useQuery";
 import { RequestStatus } from "utils/requestStatus";
 import styles from "./Products.module.scss";
-import Product from "./Product";
-import { Product as ProductType } from "state/product";
+import ProductItem from "./ProductItem";
+import { Product } from "state/product";
 import AddProduct from "./AddProduct";
 
 const Products: React.FC = () => {
-  const [products, status, error] = useQuery<ProductType[], string>(
+  const [products, status, error] = useQuery<Product[], string>(
     selectProducts,
     selectFetchStatus,
     selectError,
@@ -29,7 +29,7 @@ const Products: React.FC = () => {
           <AddProduct />
           <ul className={styles.cards}>
             {products.map((product) => (
-              <Product key={product.id} id={product.id} />
+              <ProductItem key={product.id} id={product.id} />
             ))}
           </ul>
         </div>

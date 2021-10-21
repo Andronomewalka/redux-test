@@ -1,0 +1,18 @@
+{
+  "posts": [
+    {
+      "id": "xu6XVfGHIbgswU3kP3vR-",
+      "title": "Some",
+      "author": "Any"
+    },
+    {
+      "id": "dc__SMSpjOCidyKiGFWbo",
+      "title": "Another",
+      "author": "Foo"
+    }
+  ],
+  "comments": [],
+  "profile": {
+    "name": "typicode"
+  }
+}

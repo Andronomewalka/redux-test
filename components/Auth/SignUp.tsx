@@ -33,7 +33,7 @@ const SignUp: React.FC<ClassNameProp> = ({ className }) => {
         onSubmit={onSignUpSubmit}
       >
         {({ errors, touched, isSubmitting }) => (
-          <Form className={styles.container}>
+          <Form className={cx(styles.container, styles["shadow-box"])}>
             <label className={styles.label}>
               Email Address
               <Field

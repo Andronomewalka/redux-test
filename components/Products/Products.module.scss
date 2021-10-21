@@ -7,7 +7,7 @@
        @apply ml-10 mt-5 self-stretch grid gap-10;
 
        .title {
-           @apply pl-4 pt-2 border-2 border-blue-100 rounded-md;
+           @apply pl-4 pt-2 border-blue-100 rounded-md;
 
            min-height: 45px;
            grid-column: 1;
@@ -15,12 +15,23 @@
        }
 
        .description {
-            @apply pl-4 pt-2 border-2 border-blue-100 rounded-md;
+            @apply pl-4 pt-2 border-blue-100 rounded-md;
 
             min-height: 100px;
             grid-column: 1;
             grid-row: 2;
        }
+       
+
+       .title,
+       .description {
+           @apply border-2 outline-none;
+           
+           &:hover,
+           &:focus {
+               @apply border-blue-500;
+           }
+       }    
 
        .submit {
             grid-column: 2;
@@ -35,20 +46,12 @@
 
        .card {
            @apply flex flex-col py-6 px-4 outline-none bg-white rounded-md overflow-y-auto;
-           
-           outline: none;
+        
            width: 300px;
            height: 370px;
-           box-shadow: 0px 4px 20px 10px rgba(219, 234, 254, 0.3);
-           transition: all 0.2s ease;
-        
-           &:focus,
-           &:hover {
-               box-shadow: 0px 4px 20px 10px rgba(219, 234, 254, 0.5);
-            }
 
             .title {
-                @apply font-bold mb-3 resize-none;
+                @apply font-bold mb-3;
 
                 flex-basis: 30%;
             }
@@ -58,6 +61,19 @@
 
                 flex-basis: 100%;
             }
+
+            .title,
+            .description {
+                @apply p-1 border-2 border-transparent rounded-md outline-none resize-none;
+
+                &:hover {
+                    @apply border-blue-300;
+                }
+
+                &:focus {
+                    @apply border-blue-500;
+                }
+            }    
 
             .buttonContainer {
                 @apply flex flex-row justify-between mt-4;

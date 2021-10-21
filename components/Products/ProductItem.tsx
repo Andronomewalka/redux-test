@@ -1,5 +1,6 @@
 import React, { useState, SyntheticEvent } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import cx from "classnames";
 import {
   productRemoved,
   productChanged,
@@ -8,7 +9,7 @@ import {
 import { IdProp } from "utils/basePropTypes";
 import styles from "./Products.module.scss";
 
-const Product: React.FC<IdProp> = ({ id }) => {
+const ProductItem: React.FC<IdProp> = ({ id }) => {
   const dispatch = useDispatch();
   const product = useSelector(selectProductById(id));
   const [name, setName] = useState(product.name);
@@ -31,7 +32,10 @@ const Product: React.FC<IdProp> = ({ id }) => {
   };
 
   return (
-    <form className={styles.card} onSubmit={onSubmitSave}>
+    <form
+      className={cx(styles.card, styles["shadow-box"])}
+      onSubmit={onSubmitSave}
+    >
       <textarea
         className={styles.title}
         value={name}
@@ -55,4 +59,4 @@ const Product: React.FC<IdProp> = ({ id }) => {
   );
 };
 
-export default Product;
+export default ProductItem;

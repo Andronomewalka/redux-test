@@ -3,15 +3,19 @@ import { setupListeners } from "@reduxjs/toolkit/query";
 import { productsReducer } from "state/product";
 import { authReducer } from "state/auth";
 import { pokemonApi } from "state/pokemon";
+import { postApi } from "state/post"
 
 const store = configureStore({
   reducer: {
     auth: authReducer,
     products: productsReducer,
     [pokemonApi.reducerPath]: pokemonApi.reducer,
+    [postApi.reducerPath]: postApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(pokemonApi.middleware),
+    getDefaultMiddleware()
+    .concat(pokemonApi.middleware)
+    .concat(postApi.middleware),
 });
 
 const setupStore = () => store

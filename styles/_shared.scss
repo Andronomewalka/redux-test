@@ -9,7 +9,7 @@
 }
 
 .delete {
-    @apply bg-red-600;
+    @apply bg-red-500;
 
     &:focus,
     &:hover {
@@ -27,10 +27,22 @@
 }
 
 .submit {
-    @apply bg-blue-600 cursor-pointer;
+    @apply bg-blue-500 cursor-pointer;
 
     &:focus,
     &:hover {
         @apply bg-blue-700;
+    }
+}
+
+.shadow-box {
+    @apply outline-none rounded-md;
+
+    box-shadow: 0px 4px 20px 10px rgba(219, 234, 254, 0.3);
+    transition: all 0.2s ease;
+
+    &:focus,
+    &:hover {
+        box-shadow: 0px 4px 20px 10px rgba(219, 234, 254, 0.5);
     }
 }
