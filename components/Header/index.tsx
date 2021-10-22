@@ -11,6 +11,7 @@ import {
 import styles from "./Header.module.scss";
 import { useAppSelector } from "hooks/useAppSelector";
 import { NavigationProp } from "./types";
+import { ClassNameProp } from "utils/basePropTypes";
 
 const rawNavigationItems: NavigationProp[] = [
   { id: 0, title: "Products", route: "products" },
@@ -18,7 +19,7 @@ const rawNavigationItems: NavigationProp[] = [
   { id: 2, title: "Auth", route: "auth" },
 ];
 
-const Header: React.FC = () => {
+const Header: React.FC<ClassNameProp> = ({ className }) => {
   const [navigationItems, setNavigationItems] = useState(
     Array<NavigationProp>()
   );
@@ -27,8 +28,17 @@ const Header: React.FC = () => {
   const email = useAppSelector(selectEmail);
   const isSignedIn = useSelector(selectIsSignedIn);
 
+  const onSignOut = () => {
+    dispatch(signOut());
+    router.push("./auth");
+  };
+
   const onNavigationChanged = (item: NavigationProp) => {
-    router.push(item.route);
+    if (item.route === "auth") {
+      onSignOut();
+    } else {
+      router.push(item.route);
+    }
   };
 
   useEffect(() => {
@@ -37,11 +47,6 @@ const Header: React.FC = () => {
     });
     setNavigationItems(rawNavigationItems);
   }, []);
-
-  const onSignOut = () => {
-    dispatch(signOut());
-    router.push("./auth");
-  };
 
   useEffect(() => {
     dispatch(fetchLastUsedEmail());
@@ -55,7 +60,7 @@ const Header: React.FC = () => {
           <li key={item.id}>
             <button
               className={styles.submit}
-              onClick={() => item.onClick(item)}
+              onClick={() => item.onClick!(item)}
             >
               {item.title}
             </button>

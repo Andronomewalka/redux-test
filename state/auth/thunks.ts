@@ -4,29 +4,29 @@ import safeLocalStorage from "utils/safeLocalStorage";
 import { RequestStatus } from "utils/requestStatus";
 import { ThunkActions } from "state/utils/ThunkActions";
 import { ResponseResult } from "state/utils/ResponseResult";
-import { User, UserState } from "./types";
+import { ResponseSignInResult, User, UserState } from "./types";
 
-export const signIn = createAsyncThunk<ResponseResult<string>, User>
+export const signIn = createAsyncThunk<ResponseSignInResult, User>
 ("auth/signIn", async (user, { rejectWithValue }) => {
   try {
     console.log("signing in", user);
-    const response: ResponseResult<string> = await setTimeoutAsync(() => {
-      const res: ResponseResult<string> = {
+    const response: ResponseSignInResult = await setTimeoutAsync(() => {
+      const res: ResponseSignInResult = {
         success: false,
         data: user.email,
       };
       try {
         const storedRawUser = safeLocalStorage.getItem("user");
         if (!storedRawUser) {
-          res.error = "no user exist";
+          res.validationError = "no user exist";
           return res;
         }
         const storedUser = JSON.parse(storedRawUser);
         if (storedUser.email !== user.email) {
-          res.error = "wrong email";
+          res.validationError = "wrong email";
           return res;
         } else if (storedUser.password !== user.password) {
-          res.error = "wrong pass";
+          res.validationError = "wrong pass";
           return res;
         }
         user.isSignedIn = true;
@@ -38,7 +38,7 @@ export const signIn = createAsyncThunk<ResponseResult<string>, User>
       }
       return res;
     }, 1500);
-    if (!response.success) {
+    if (!response.success && !response.validationError) {
       throw new Error(response.error);
     }
     return response;
@@ -47,7 +47,7 @@ export const signIn = createAsyncThunk<ResponseResult<string>, User>
   }
 });
 
-export const signInActions: ThunkActions<UserState, ResponseResult<string>> = {
+export const signInActions: ThunkActions<UserState, ResponseSignInResult> = {
   pending: (state) => {
     state.status = RequestStatus.Requesting;
   },
@@ -59,7 +59,7 @@ export const signInActions: ThunkActions<UserState, ResponseResult<string>> = {
       state.validationError = "";
       state.isSignedIn = true;
     } else {
-      state.validationError = response.error ?? "";
+      state.validationError = response.validationError ?? "";
     }
   },
   rejected: (state, action) => {

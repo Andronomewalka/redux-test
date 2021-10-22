@@ -1,17 +1,13 @@
 import type { AppProps } from "next/app";
 import { Provider } from "react-redux";
 import state from "state/store";
-import Middleware from "utils/_middleware";
-import Header from "components/Header";
+import MainContainer from "components/MainContainer";
 import "../styles/globals.scss";
 
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp(props: AppProps) {
   return (
     <Provider store={state}>
-      <Middleware>
-        <Header />
-        <Component {...pageProps} />
-      </Middleware>
+      <MainContainer {...props} />
     </Provider>
   );
 }

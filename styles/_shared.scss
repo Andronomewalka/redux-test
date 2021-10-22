@@ -11,7 +11,6 @@
 .delete {
     @apply bg-red-500;
 
-    &:focus,
     &:hover {
         @apply bg-red-700;
      }
@@ -20,7 +19,6 @@
 .cancel {
     @apply ml-auto mr-2 bg-gray-400;
 
-    &:focus,
     &:hover {
         @apply bg-gray-500;
      }
@@ -29,7 +27,6 @@
 .submit {
     @apply bg-blue-500 cursor-pointer;
 
-    &:focus,
     &:hover {
         @apply bg-blue-700;
     }
@@ -39,7 +36,7 @@
     @apply outline-none rounded-md;
 
     box-shadow: 0px 4px 20px 10px rgba(219, 234, 254, 0.3);
-    transition: all 0.2s ease;
+    transition: all 0.5s ease;
 
     &:focus,
     &:hover {

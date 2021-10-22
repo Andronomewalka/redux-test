@@ -1,4 +1,5 @@
 import React, { useCallback } from "react";
+import Loader from "react-loader-spinner";
 import PostItem from "./PostItem";
 import {
   Post,
@@ -38,11 +39,15 @@ const Posts: React.FC = () => {
   );
 
   return (
-    <>
-      {isLoading && "Loading..."}
+    <div className={styles.container}>
+      {isLoading && (
+        <div className={styles.loader}>
+          <Loader type="Bars" color="#00BFFF" height={40} />
+        </div>
+      )}
       {error && `Error - ${error}`}
       {posts && (
-        <div className={styles.container}>
+        <>
           <CreatePost onCreate={onPostCreate} />
           <ul className={styles.posts}>
             {posts.map((post) => (
@@ -54,9 +59,9 @@ const Posts: React.FC = () => {
               />
             ))}
           </ul>
-        </div>
+        </>
       )}
-    </>
+    </div>
   );
 };
 

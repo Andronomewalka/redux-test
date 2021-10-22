@@ -10,6 +10,8 @@ const CreatePost: React.FC<CreatePostProp> = ({ onCreate }) => {
   const onSubmitCreate = (e: SyntheticEvent) => {
     e.preventDefault();
     onCreate({ id: -1, title, author });
+    setTitle("");
+    setAuthor("");
   };
 
   return (

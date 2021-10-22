@@ -1,0 +1,7 @@
+.container {
+    @apply w-full h-full flex flex-col;
+
+    .mainContainer {
+        @apply flex-grow;
+    }
+}
