@@ -59,7 +59,7 @@ const Header: React.FC<ClassNameProp> = ({ className }) => {
         {navigationItems.map((item) => (
           <li key={item.id}>
             <button
-              className={styles.submit}
+              className={styles.inverse}
               onClick={() => item.onClick!(item)}
             >
               {item.title}

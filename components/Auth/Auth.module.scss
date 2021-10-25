@@ -29,10 +29,6 @@
 
     .submit {
         @apply mt-4;
-
-        &.is-disabled {
-            @apply bg-gray-400;
-        }
     }
 
     .requestInfoContainer {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   fetchProducts,
   selectProducts,
@@ -11,14 +11,23 @@ import styles from "./Products.module.scss";
 import ProductItem from "./ProductItem";
 import { Product } from "state/product";
 import AddProduct from "./AddProduct";
+import { useAppDispatch } from "hooks/useAppDispatch";
+import { infoAdded, InfoStatus } from "state/info";
 
 const Products: React.FC = () => {
+  const dispatch = useAppDispatch();
   const [products, status, error] = useQuery<Product[], string>(
     selectProducts,
     selectFetchStatus,
     selectError,
     fetchProducts
   );
+
+  useEffect(() => {
+    if (error) {
+      dispatch(infoAdded({ text: error, status: InfoStatus.Bad }));
+    }
+  }, [error]);
 
   return (
     <>

@@ -12,4 +12,8 @@
     .navigationItems {
         @apply flex flex-row justify-end gap-3;
     }
+
+    .inverse {
+        transition: all .2s ease;
+    }
 }

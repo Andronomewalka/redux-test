@@ -12,10 +12,16 @@
     }
 
     .post {
-        @apply  p-4;
+        @apply relative p-4;
 
         .form {
             @apply w-full flex flex-row justify-between gap-2;
+
+            transition: all .3s ease;
+
+            &.is-requesting {
+                filter:blur(0.1em);
+            }
 
             .label {
                 @apply block w-full;
@@ -46,6 +52,21 @@
 
             .buttonsContainer {
                 @apply flex flex-col gap-2;
+            
+            }
+        }
+        
+        .requesting {
+            @apply absolute opacity-0;
+
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+
+            transition: all .3s ease;
+
+            &.is-requesting {
+                @apply opacity-100;
             }
         }
     }

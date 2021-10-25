@@ -1,16 +1,6 @@
 {
   "posts": [
     {
-      "id": "xu6XVfGHIbgswU3kP3vR-",
-      "title": "Some",
-      "author": "Any"
-    },
-    {
-      "id": "dc__SMSpjOCidyKiGFWbo",
-      "title": "Another",
-      "author": "Foo"
-    },
-    {
       "id": "S75cj7Y0QeF7DrxnKlhaL",
       "title": "Post",
       "author": "Me"
@@ -18,7 +8,7 @@
     {
       "id": "XkjxXlzb2ldubUmTA-ztx",
       "title": "Some",
-      "author": "Any"
+      "author": "Any22"
     }
   ],
   "comments": [],

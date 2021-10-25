@@ -1,9 +1,13 @@
 import { CaseReducer, PayloadAction } from "@reduxjs/toolkit"
 import { Product, ProductState } from './types'
 import { nanoid } from "nanoid";
-import { WritableDraft } from "immer/dist/internal";
 
-export const productAddedCase : any = {
+export const productAddedCase : {
+  reducer: (state: ProductState, action: PayloadAction<Product>) => void;
+  prepare: (info: Product) => {
+      payload: Product;
+  };
+} = {
   reducer: (state: any, action: any) => {
     try {
       state.products.unshift(action.payload);
@@ -14,10 +18,10 @@ export const productAddedCase : any = {
   prepare: (product: Product) => {
     try {
       product.id = nanoid();
-      return { payload: product };
     } catch (err) {
       console.log("productAdded prepare err", err);
     }
+    return { payload: product };
   },
 };
 

@@ -30,7 +30,7 @@ export const postApi = createApi({
 		}),
 		updatePost: builder.mutation<Post, Post>({
 			query: (post) => ({
-				url: `/posts`,
+				url: `/posts/${post.id}`,
 				method: "PUT",
 				body: post
 			}),
