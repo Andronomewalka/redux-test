@@ -32,30 +32,29 @@ const ProductItem: React.FC<IdProp> = ({ id }) => {
   };
 
   return (
-    <form
-      className={cx(styles.card, styles["shadow-box"])}
-      onSubmit={onSubmitSave}
-    >
-      <textarea
-        className={styles.title}
-        value={name}
-        onChange={(e) => void setName(e.target.value)}
-      />
-      <textarea
-        className={styles.description}
-        value={description}
-        onChange={(e) => void setDescription(e.target.value)}
-      />
-      <div className={styles.buttonContainer}>
-        <button className={styles.delete} onClick={onDeleteProduct}>
-          Delete
-        </button>
-        <button className={styles.cancel} onClick={onCancelProduct}>
-          Cancel
-        </button>
-        <input type="submit" className={styles.submit} value="Save" />
-      </div>
-    </form>
+    <li className={cx(styles.card, styles["shadow-box"])}>
+      <form className={styles.form} onSubmit={onSubmitSave}>
+        <textarea
+          className={styles.title}
+          value={name}
+          onChange={(e) => void setName(e.target.value)}
+        />
+        <textarea
+          className={styles.description}
+          value={description}
+          onChange={(e) => void setDescription(e.target.value)}
+        />
+        <div className={styles.buttonContainer}>
+          <button className={styles.delete} onClick={onDeleteProduct}>
+            Delete
+          </button>
+          <button className={styles.cancel} onClick={onCancelProduct}>
+            Cancel
+          </button>
+          <input type="submit" className={styles.submit} value="Save" />
+        </div>
+      </form>
+    </li>
   );
 };
 

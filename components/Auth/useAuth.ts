@@ -39,7 +39,6 @@ export const useAuth = <T>(formikRef: RefObject<FormikProps<SubmitProp<T>>>): Us
 
   const validationError = useSelector(selectValidationError);
 
-
   const onSignInSubmit = (data: SignInFormValues, {setSubmitting}: FormikHelpers<SignInFormValues>) => {
     setSubmitting(true);
     (async () => {

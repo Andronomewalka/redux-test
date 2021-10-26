@@ -6,6 +6,10 @@ import { ProductState } from "./types";
 
 const initialState: ProductState = {
   products: [],
+  page: 1,
+  limit: 4,
+  maxPages: 10,
+  search: "google",
   status: RequestStatus.Idle,
   error: "",
 };
@@ -16,16 +20,22 @@ const productsSlice = createSlice({
   reducers: {
     productAdded: cases.productAddedCase,
     productRemoved: cases.productRemovedCase,
-    productChanged: cases.productChangedCase,
+    productChanged: cases.productChangedCase
   },
   extraReducers: (builder) => {
-    builder.addCase(thunks.fetchProducts.pending, thunks.fetchProductsActions.pending);
-    builder.addCase(thunks.fetchProducts.fulfilled, thunks.fetchProductsActions.fulfilled);
-    builder.addCase(thunks.fetchProducts.rejected, thunks.fetchProductsActions.rejected);
+    builder.addCase(thunks.fetchAllProducts.pending, thunks.fetchAllProductsActions.pending);
+    builder.addCase(thunks.fetchAllProducts.fulfilled, thunks.fetchAllProductsActions.fulfilled);
+    builder.addCase(thunks.fetchAllProducts.rejected, thunks.fetchAllProductsActions.rejected);
+    builder.addCase(thunks.fetchProductsBySearch.pending, thunks.fetchProductsBySearchActions.pending);
+    builder.addCase(thunks.fetchProductsBySearch.fulfilled, thunks.fetchProductsBySearchActions.fulfilled);
+    builder.addCase(thunks.fetchProductsBySearch.rejected, thunks.fetchProductsBySearchActions.rejected);
   },
 });
 
-export const { productAdded, productRemoved, productChanged } =
-  productsSlice.actions;
+export const { 
+  productAdded, 
+  productRemoved,
+  productChanged,
+} = productsSlice.actions;
 
 export default productsSlice.reducer;

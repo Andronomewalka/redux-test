@@ -1,83 +1,114 @@
 @import "../../styles/_shared.scss";
 
 .container {
-   @apply w-full h-full flex flex-col justify-start items-center gap-10;
+   @apply w-full h-full relative flex flex-col justify-start items-center gap-10;
 
-   .addProductContainer {
-       @apply ml-10 mt-5 self-stretch grid gap-10;
+   .addProductModal {
+       @apply absolute self-end top-4 right-4;
+   }
 
-       .title {
-           @apply pl-4 pt-2 border-blue-100 rounded-md;
+   .search {
+       @apply mt-8;
+       @extend .bottom-line-input;
 
-           min-height: 45px;
-           grid-column: 1;
-           grid-row: 1;
-       }
-
-       .description {
-            @apply pl-4 pt-2 border-blue-100 rounded-md;
-
-            min-height: 100px;
-            grid-column: 1;
-            grid-row: 2;
-       }
-       
-
-       .title,
-       .description {
-           @apply border-2 outline-none;
-           
-           &:hover,
-           &:focus {
-               @apply border-blue-500;
-           }
-       }    
-
-       .submit {
-            grid-column: 2;
-            grid-row: 1 / span 2;
-            align-self: end;
-            justify-self: start;
-        }
+       width: 500px;
+       font-size: 2.5em;
    }
 
    .cards {
-       @apply flex flex-wrap gap-10 m-auto p-10;
+       @apply flex flex-wrap gap-10 m-auto px-10;
 
        .card {
-           @apply flex flex-col py-6 px-4 outline-none bg-white rounded-md overflow-y-auto;
-        
            width: 300px;
            height: 370px;
 
-            .title {
-                @apply font-bold mb-3;
+           .form {
+                @apply h-full flex flex-col py-6 px-4 outline-none bg-white rounded-md overflow-y-auto;
 
-                flex-basis: 30%;
-            }
+               .title {
+                    @apply font-bold mb-3;
 
-            .description {
-                @apply resize-none;
-
-                flex-basis: 100%;
-            }
-
-            .title,
-            .description {
-                @apply p-1 border-2 border-transparent rounded-md outline-none resize-none;
-
-                &:hover {
-                    @apply border-blue-300;
+                    flex-basis: 30%;
                 }
 
-                &:focus {
-                    @apply border-blue-500;
-                }
-            }    
+                .description {
+                    @apply resize-none;
 
-            .buttonContainer {
-                @apply flex flex-row justify-between mt-4;
+                    flex-basis: 100%;
+                }
+
+                .title,
+                .description {
+                    @apply p-1 border-2 border-transparent rounded-md outline-none resize-none;
+
+                    &:hover {
+                        @apply border-blue-300;
+                    }
+
+                    &:focus {
+                        @apply border-blue-500;
+                    }
+                }    
+
+                .buttonContainer {
+                    @apply flex flex-row justify-between mt-4;
+                }
             }
         }
    }
+
+   .pagination {
+       @apply flex flex-row justify-center items-center gap-1 pb-4;
+
+       .inverse {
+           @apply w-28 px-6 rounded-3xl;
+       }
+
+       .bottom-line-input {
+           @apply w-10 text-center text-lg;
+        }
+
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+   }
+}
+
+.addProductContainer {
+    @apply flex flex-col gap-5 p-4 pb-0;
+
+    width: 400px;
+
+    .title {
+        @apply pl-4 pt-2 border-blue-100 rounded-md;
+
+        min-height: 45px;
+    }
+
+    .description {
+         @apply pl-4 pt-2 border-blue-100 rounded-md;
+
+         min-height: 100px;
+    }
+    
+
+    .title,
+    .description {
+        @apply border-2 outline-none;
+        
+        &:hover,
+        &:focus {
+            @apply border-blue-500;
+        }
+    }    
+
+    .submit {
+        @apply self-stretch;
+     }
 }

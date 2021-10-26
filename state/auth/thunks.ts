@@ -9,7 +9,6 @@ import { ResponseSignInResult, User, UserState } from "./types";
 export const signIn = createAsyncThunk<ResponseSignInResult, User>
 ("auth/signIn", async (user, { rejectWithValue }) => {
   try {
-    console.log("signing in", user);
     const response: ResponseSignInResult = await setTimeoutAsync(() => {
       const res: ResponseSignInResult = {
         success: false,
@@ -120,7 +119,6 @@ export const fetchLastUsedEmail = createAsyncThunk<string>(
   "auth/fetchLastUsedEmail",
   async (_, { rejectWithValue }) => {
     try {
-      console.log("fetching last user");
       const rawUser = safeLocalStorage.getItem("user");
       if (rawUser) {
         return JSON.parse(rawUser)?.email;

@@ -1,0 +1,84 @@
+.container {
+
+    .overlay {
+        @apply fixed top-0 right-0 w-screen h-screen;
+
+        background-color: #00000099;
+        transition: all .2s ease;
+    }
+
+    .modal {
+        @apply fixed overflow-y-auto rounded-md;
+
+        top: 50%;
+        left: 50%;
+        transform: scale(1) translate(-50%, -50%);
+        transform-origin: top left;
+        transition: all .4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+        .titleWrapper {
+            @apply flex justify-center items-center;
+        }
+        
+        .title {
+            font-weight: 700;
+            font-size: 1.5rem;
+            line-height: 2rem;
+            color: #000000;
+            text-align: left;
+            margin-bottom: 1.5rem;
+            :empty {
+                margin-bottom: 0;
+            }
+        }
+
+        .close {
+            @apply absolute top-4 right-4;
+        }
+    }
+
+    :global(.overlay-transition-enter){
+        opacity: 0;
+    }
+
+    :global(.overlay-transition-enter-active){
+        opacity: 1;
+    }
+
+    :global(.overlay-transition-enter-done){
+        opacity: 1;
+    }
+    
+    :global(.overlay-transition-exit){
+        opacity: 1;
+    }
+        
+    :global(.overlay-transition-exit-active){
+        opacity: 0;
+    }
+
+    :global(.modal-transition-enter){
+        opacity: 0;
+        transform: scale(0.5) translate(-50%, -50%);
+    }
+
+    :global(.modal-transition-enter-active){
+        opacity: 1;
+        transform: scale(1) translate(-50%, -50%);
+    }
+
+    :global(.modal-transition-enter-done){
+        opacity: 1;
+        transform: scale(1) translate(-50%, -50%);
+    }
+    
+    :global(.modal-transition-exit){
+        opacity: 1;
+        transform: scale(1) translate(-50%, -50%);
+    }
+        
+    :global(.modal-transition-exit-active){
+        opacity: 0;
+        transform: scale(0.7) translate(-50%, -50%);
+    }
+}
