@@ -20,15 +20,55 @@ const auhtSlice = createSlice({
     signOut: cases.signOutCase
   },
   extraReducers: (builder) => {
-    builder.addCase(thunks.signIn.pending, thunks.signInActions.pending);
-    builder.addCase(thunks.signIn.fulfilled, thunks.signInActions.fulfilled);
-    builder.addCase(thunks.signIn.rejected, thunks.signInActions.rejected);
-    builder.addCase(thunks.signUp.pending, thunks.signUpActions.pending);
-    builder.addCase(thunks.signUp.fulfilled, thunks.signUpActions.fulfilled);
-    builder.addCase(thunks.signUp.rejected, thunks.signUpActions.rejected);
-    builder.addCase(thunks.fetchLastUsedEmail.pending, thunks.fetchLastUsedEmailActions.pending);
-    builder.addCase(thunks.fetchLastUsedEmail.fulfilled, thunks.fetchLastUsedEmailActions.fulfilled);
-    builder.addCase(thunks.fetchLastUsedEmail.rejected, thunks.fetchLastUsedEmailActions.rejected);
+    builder.addCase(thunks.signIn.pending, (state, action) => {
+      state.status = RequestStatus.Requesting;
+    });
+    builder.addCase(thunks.signIn.fulfilled, (state, action) => {
+      state.status = RequestStatus.Succeeded;
+    const response = action.payload;
+    if (response.success) {
+      state.email = response.data;
+      state.validationError = "";
+      state.isSignedIn = true;
+    } else {
+      state.validationError = response.validationError ?? "";
+    }
+    });
+    builder.addCase(thunks.signIn.rejected, (state, action) => {
+      state.status = RequestStatus.Failed;
+      state.error = action.payload as string;
+    });
+
+    builder.addCase(thunks.signUp.pending, (state, action) => {
+      state.status = RequestStatus.Requesting;
+    });
+    builder.addCase(thunks.signUp.fulfilled, (state, action) => {
+      state.status = RequestStatus.Succeeded;
+      const response = action.payload;
+      state.email = response.data;
+      if (response.success) {
+        state.validationError = "";
+        state.isSignedIn = true;
+      } else {
+        state.validationError = response.error ?? "";
+      }
+    });
+    builder.addCase(thunks.signUp.rejected, (state, action) => {
+      state.status = RequestStatus.Failed;
+      state.error = action.payload as string;
+    });
+
+    builder.addCase(thunks.fetchLastUsedEmail.pending, (state, action) => {
+      state.status = RequestStatus.Requesting;
+    });
+    builder.addCase(thunks.fetchLastUsedEmail.fulfilled, (state, action) => {
+      state.status = RequestStatus.Succeeded;
+      state.email = action.payload;
+    });
+    builder.addCase(thunks.fetchLastUsedEmail.rejected, (state, action) => {
+      state.status = RequestStatus.Failed;
+      state.error = action.payload as string;
+    });
   }
 });
 

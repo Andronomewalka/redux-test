@@ -16,7 +16,7 @@
 .delete {
     @apply bg-red-500;
 
-    &:hover {
+    &:hover:enabled {
         @apply bg-red-600;
      }
 }
@@ -27,7 +27,7 @@
     color:#696969;
     box-shadow: 0 4px 14px 0 rgb(0 0 0 / 10%);
 
-    &:hover {
+    &:hover:enabled {
         background: rgba(255, 255, 255, 0.9);
         box-shadow: 0 6px 20px rgb(93 93 93 / 23%);
      }
@@ -39,7 +39,7 @@
     background-color: #0070f3;
     box-shadow: 0 4px 14px 0 rgb(0 118 255 / 39%);
 
-    &:hover {
+    &:hover:enabled {
         background: rgba(0, 118, 255, 0.9);
         box-shadow: 0 6px 20px rgb(0 118 255 / 23%);
     }
@@ -51,7 +51,7 @@
     color: rgba(0, 118, 255, 0.9);
     transition: all .2s ease;
     
-    &:hover {
+    &:hover:enabled {
         color: white;
         background-color: rgba(0, 118, 255, 0.9);
     }

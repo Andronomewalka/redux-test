@@ -1,8 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { setTimeoutAsync } from "utils/setTimeoutAsync";
 import safeLocalStorage from "utils/safeLocalStorage";
-import { RequestStatus } from "utils/requestStatus";
-import { ThunkActions } from "state/utils/ThunkActions";
 import { ResponseResult } from "state/utils/ResponseResult";
 import { ResponseSignInResult, User, UserState } from "./types";
 
@@ -46,27 +44,6 @@ export const signIn = createAsyncThunk<ResponseSignInResult, User>
   }
 });
 
-export const signInActions: ThunkActions<UserState, ResponseSignInResult> = {
-  pending: (state) => {
-    state.status = RequestStatus.Requesting;
-  },
-  fulfilled: (state, action) => {
-    state.status = RequestStatus.Succeeded;
-    const response = action.payload;
-    if (response.success) {
-      state.email = response.data;
-      state.validationError = "";
-      state.isSignedIn = true;
-    } else {
-      state.validationError = response.validationError ?? "";
-    }
-  },
-  rejected: (state, action) => {
-    state.status = RequestStatus.Failed;
-    state.error = action.payload as string;
-  }
-}
-
 export const signUp = createAsyncThunk<ResponseResult<string>, User>
 ("auth/SignUp", async (user: User, { rejectWithValue }) => {
   try {
@@ -94,27 +71,6 @@ export const signUp = createAsyncThunk<ResponseResult<string>, User>
   }
 });
 
-export const signUpActions: ThunkActions<UserState, ResponseResult<string>> = {
-  pending: (state) => {
-    state.status = RequestStatus.Requesting;
-  },
-  fulfilled: (state, action) => {
-    state.status = RequestStatus.Succeeded;
-    const response = action.payload;
-    state.email = response.data;
-    if (response.success) {
-      state.validationError = "";
-      state.isSignedIn = true;
-    } else {
-      state.validationError = response.error ?? "";
-    }
-  },
-  rejected: (state, action) => {
-    state.status = RequestStatus.Failed;
-    state.error = action.payload as string;
-  }
-}
-
 export const fetchLastUsedEmail = createAsyncThunk<string>(
   "auth/fetchLastUsedEmail",
   async (_, { rejectWithValue }) => {
@@ -130,17 +86,3 @@ export const fetchLastUsedEmail = createAsyncThunk<string>(
     }
   }
 );
-
-export const fetchLastUsedEmailActions: ThunkActions<UserState, string> = {
-  pending: (state) => {
-    state.status = RequestStatus.Requesting;
-  },
-  fulfilled: (state, action) => {
-    state.status = RequestStatus.Succeeded;
-    state.email = action.payload;
-  },
-  rejected: (state, action) => {
-    state.status = RequestStatus.Failed;
-    state.error = action.payload as string;
-  }
-}

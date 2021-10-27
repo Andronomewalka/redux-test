@@ -1,8 +1,17 @@
-import { createSlice, } from "@reduxjs/toolkit";
+import { CaseReducer, createSlice, PayloadAction, } from "@reduxjs/toolkit";
 import { RequestStatus } from "utils/requestStatus";
 import * as cases from "./actions";
 import * as thunks from "./thunks";
 import { ProductState } from "./types";
+
+export const shitTest: CaseReducer<ProductState, PayloadAction<string>> = (state, action) => {
+  try {
+    const productId = action.payload;
+    state.products = state.products.filter((cur) => cur.id !== productId);
+  } catch (err) {
+    console.log("productRemoved err", err);
+  }
+};
 
 const initialState: ProductState = {
   products: [],
@@ -23,12 +32,69 @@ const productsSlice = createSlice({
     productChanged: cases.productChangedCase
   },
   extraReducers: (builder) => {
-    builder.addCase(thunks.fetchAllProducts.pending, thunks.fetchAllProductsActions.pending);
-    builder.addCase(thunks.fetchAllProducts.fulfilled, thunks.fetchAllProductsActions.fulfilled);
-    builder.addCase(thunks.fetchAllProducts.rejected, thunks.fetchAllProductsActions.rejected);
-    builder.addCase(thunks.fetchProductsBySearch.pending, thunks.fetchProductsBySearchActions.pending);
-    builder.addCase(thunks.fetchProductsBySearch.fulfilled, thunks.fetchProductsBySearchActions.fulfilled);
-    builder.addCase(thunks.fetchProductsBySearch.rejected, thunks.fetchProductsBySearchActions.rejected);
+    //Fetch all
+    builder.addCase(thunks.fetchAllProducts.pending, (state, action) => {
+      state.status = RequestStatus.Requesting;
+    });
+    builder.addCase(thunks.fetchAllProducts.fulfilled, (state, action) => {
+      state.status = RequestStatus.Succeeded;
+      state.products = action.payload;
+      state.search = "";
+    });
+    builder.addCase(thunks.fetchAllProducts.rejected, (state, action) => {
+      state.status = RequestStatus.Failed;
+      state.error = action.payload as string;
+    });
+
+    //Search
+    builder.addCase(thunks.fetchProductsBySearch.pending, (state, action) => {
+      state.status = RequestStatus.Requesting;
+    });
+    builder.addCase(thunks.fetchProductsBySearch.fulfilled, (state, action) => {
+      state.status = RequestStatus.Succeeded;
+      state.products = action.payload.data;
+      state.search = action.payload.search;
+      state.page = action.payload.page;
+    });
+    builder.addCase(thunks.fetchProductsBySearch.rejected, (state, action) => {
+      state.status = RequestStatus.Failed;
+      state.error = action.payload as string;
+    });
+
+    //Update
+    builder.addCase(thunks.updateProduct.pending, (state, action) => {
+      const requestedProduct =  action.meta.arg;
+      const productIndex = state.products.findIndex(
+        (cur) => cur.id === requestedProduct.id
+      );
+      state.products[productIndex].status = {
+        state: RequestStatus.Requesting,
+        text: 'Product updating' 
+      };
+    });
+    builder.addCase(thunks.updateProduct.fulfilled, (state, action) => {
+      const product = action.payload;
+      product.status = {
+        state: RequestStatus.Succeeded,
+        text: 'Product updated' 
+      };
+      const productIndex = state.products.findIndex(
+        (cur) => cur.id === product.id
+      );
+      state.products[productIndex] = product;
+    });
+
+    //Delete
+    builder.addCase(thunks.deleteProduct.pending, (state, action) => {
+      const requestedProduct =  action.meta.arg;
+      const productIndex = state.products.findIndex(
+        (cur) => cur.id === requestedProduct.id
+      );
+      state.products[productIndex].status = {
+        state: RequestStatus.Requesting,
+        text: 'Product deleting' 
+      };
+    });
   },
 });
 

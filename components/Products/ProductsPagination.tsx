@@ -74,13 +74,11 @@ const ProductsPagination: React.FC = () => {
   };
 
   const onPageInputChanged = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log("in onPageInputChanged", isSearchUpdatedRef.current);
     isSearchUpdatedRef.current = false;
     setPageState(+e.target.value);
   };
 
   const onSearchInputChanged = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log("in onSearchInputChanged", isSearchUpdatedRef.current);
     isSearchUpdatedRef.current = true;
     setSearch(e.target.value);
   };

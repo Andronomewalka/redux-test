@@ -1,10 +1,10 @@
 import { ResponseResult } from "state/utils/ResponseResult";
-import { RequestStatus } from "utils/requestStatus"
-
+import { RequestStatus, RequestStatusExtend } from "utils/requestStatus"
 export interface Product {
     id: number | string,
     name: string,
-    description: string
+    description: string,
+    status?: RequestStatusExtend
 }
 
 export interface ProductState {
@@ -21,16 +21,13 @@ export interface ResponseFetchProductsByPageResult extends ResponseResult<Produc
     page: number;
 }
 
-interface ProductsPageSearch { 
-    page: number;
-}
-
-export interface RequestProductsSearch extends ProductsPageSearch {
+export interface RequestProductsSearch {
     search: string,
+    page: number
 }
 
 export interface ResponseProductsSearchResult extends 
     ResponseResult<Product[]>,
-    ProductsPageSearch {
+    RequestProductsSearch {
 }
 

@@ -1,15 +1,14 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import { createAsyncThunk, nanoid } from "@reduxjs/toolkit";
 import { client } from "utils/client";
-import { RequestStatus } from "utils/requestStatus";
-import { ThunkActions } from "state/utils/ThunkActions";
 import {
   Product, 
-  ProductState,
   RequestProductsSearch,
   ResponseProductsSearchResult
 } from "./types";
-import { selectProductsLimit } from ".";
+import { selectProductsLimit, selectProductsPage, selectProductsSearch } from ".";
 import { RootState } from "state/store";
+import { setTimeoutAsync } from "utils/setTimeoutAsync";
+import { infoAdded, InfoStatus } from "state/info";
 
 export const fetchAllProducts = createAsyncThunk<Product[]>
 ("products/fetchAllProducts", async (_, { rejectWithValue }) => {
@@ -22,20 +21,6 @@ export const fetchAllProducts = createAsyncThunk<Product[]>
       return rejectWithValue(err?.message ?? "fetching products fucked up");
   }
 });
-
-export const fetchAllProductsActions: ThunkActions<ProductState, Product[]> = {
-  pending: (state) => {
-    state.status = RequestStatus.Requesting;
-  },
-  fulfilled: (state, action) => {
-    state.status = RequestStatus.Succeeded;
-    state.products = action.payload;
-  },
-  rejected: (state, action) => {
-    state.status = RequestStatus.Failed;
-    state.error = action.payload as string;
-  }
-}
 
 export const fetchProductsBySearch = 
 createAsyncThunk<ResponseProductsSearchResult, RequestProductsSearch>
@@ -54,6 +39,7 @@ createAsyncThunk<ResponseProductsSearchResult, RequestProductsSearch>
     const result: ResponseProductsSearchResult = {
       success: true,
       data: response,
+      search: request.search,
       page: request.page
     }
     
@@ -63,18 +49,112 @@ createAsyncThunk<ResponseProductsSearchResult, RequestProductsSearch>
   }
 });
 
-export const fetchProductsBySearchActions: 
-  ThunkActions<ProductState, ResponseProductsSearchResult> = {
-  pending: (state) => {
-    state.status = RequestStatus.Requesting;
-  },
-  fulfilled: (state, action) => {
-    state.status = RequestStatus.Succeeded;
-    state.products = action.payload.data;
-    state.page = action.payload.page;
-  },
-  rejected: (state, action) => {
-    state.status = RequestStatus.Failed;
-    state.error = action.payload as string;
+export const createProduct= 
+createAsyncThunk<Product, Product>
+("products/createProduct", async (product, { getState, dispatch, rejectWithValue }) => {
+  try {
+    const state = getState() as RootState;
+
+    product.id = nanoid();
+    const {status, ...productTO} = product
+
+    const response = await client.post(
+      `http://127.0.0.1:3001/products`, productTO
+    );
+
+    if (response === null) 
+      throw new Error();
+
+    const lowerSearch = selectProductsSearch(state)?.toLowerCase();
+    
+    if (!lowerSearch || product.name.toLowerCase().includes(lowerSearch) || 
+    product.description.toLowerCase().includes(lowerSearch)) {
+      await dispatch(fetchProductsBySearch({ 
+        search: lowerSearch,
+        page: selectProductsPage(state)
+      }))
+    }
+
+    dispatch(infoAdded({ text: "Product created", status: InfoStatus.Good }))
+    
+    return product;
+  } catch (err: any) {
+    dispatch(infoAdded({ text: "Product created", status: InfoStatus.Bad }))
+      return rejectWithValue(err?.message ?? "creating product fucked up");
   }
-}
+});
+
+export const updateProduct= 
+createAsyncThunk<Product, Product>
+("products/updateProduct", async (product, { getState, dispatch, rejectWithValue }) => {
+  try {
+    dispatch(infoAdded({ text: "Product updating", status: InfoStatus.Pending }))
+
+    const state = getState() as RootState;
+    const {status, ...productTO} = product;
+    
+    const response = await setTimeoutAsync(async () => {
+      try {
+        return client.put(
+          `http://127.0.0.1:3001/products/${productTO.id}`, productTO
+        );
+      } catch (err: any) {
+        return null;
+      }
+    }, 1500)
+
+    if (response === null) 
+      throw new Error();
+
+    const lowerSearch = selectProductsSearch(state)?.toLowerCase();
+
+    if (lowerSearch && !product.name.toLowerCase().includes(lowerSearch) && 
+    !product.description.toLowerCase().includes(lowerSearch)) {
+      await dispatch(fetchProductsBySearch({ 
+        search: lowerSearch,
+        page: selectProductsPage(state)
+      }))
+    }
+
+    dispatch(infoAdded({ text: "Product updated", status: InfoStatus.Good }))
+    
+    return product;
+  } catch (err: any) {
+    dispatch(infoAdded({ text: "Product updating fucked up", status: InfoStatus.Bad }))
+      return rejectWithValue(err?.message ?? "updating product fucked up");
+  }
+});
+
+export const deleteProduct= 
+createAsyncThunk<Product, Product>
+("products/deleteProduct", async (product, { getState, dispatch, rejectWithValue }) => {
+  try {
+    const state = getState() as RootState;
+    const {status, ...productTO} = product
+
+    const response = await setTimeoutAsync(async () => {
+      try {
+        return client.delete(
+          `http://127.0.0.1:3001/products/${productTO.id}`, productTO
+        );
+      } catch (err: any) {
+        return null;
+      }
+    }, 1500)
+
+    if (response === null) 
+      throw new Error();
+
+    await dispatch(fetchProductsBySearch({ 
+      search: selectProductsSearch(state),
+      page: selectProductsPage(state)
+    }))
+
+    dispatch(infoAdded({ text: "Product deleted", status: InfoStatus.Good }))
+    
+    return product;
+  } catch (err: any) {
+      dispatch(infoAdded({ text: "Product deleting fucked up", status: InfoStatus.Bad }))
+      return rejectWithValue(err?.message ?? "deleting product fucked up");
+  }
+});

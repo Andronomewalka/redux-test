@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import {
   selectEmail,
@@ -12,6 +12,7 @@ import styles from "./Header.module.scss";
 import { useAppSelector } from "hooks/useAppSelector";
 import { NavigationProp } from "./types";
 import { ClassNameProp } from "utils/basePropTypes";
+import { useAppDispatch } from "hooks/useAppDispatch";
 
 const rawNavigationItems: NavigationProp[] = [
   { id: 0, title: "Products", route: "products" },
@@ -23,7 +24,7 @@ const Header: React.FC<ClassNameProp> = ({ className }) => {
   const [navigationItems, setNavigationItems] = useState(
     Array<NavigationProp>()
   );
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const router = useRouter();
   const email = useAppSelector(selectEmail);
   const isSignedIn = useSelector(selectIsSignedIn);

@@ -4,3 +4,8 @@ export enum RequestStatus {
   Succeeded = "Succeeded",
   Failed = "Failed",
 }
+
+export interface RequestStatusExtend {
+  state: RequestStatus,
+  text: string
+}

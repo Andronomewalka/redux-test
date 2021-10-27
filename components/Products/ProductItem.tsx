@@ -1,23 +1,30 @@
-import React, { useState, SyntheticEvent } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useState, SyntheticEvent, useEffect } from "react";
 import cx from "classnames";
 import {
   productRemoved,
-  productChanged,
   selectProductById,
+  updateProduct,
+  selectProductStatusById,
+  deleteProduct,
 } from "state/product";
 import { IdProp } from "utils/basePropTypes";
 import styles from "./Products.module.scss";
+import { useAppSelector } from "hooks/useAppSelector";
+import { useAppDispatch } from "hooks/useAppDispatch";
+import { RequestStatus } from "utils/requestStatus";
+import Loader from "react-loader-spinner";
+import { infoAdded, InfoStatus } from "state/info";
 
 const ProductItem: React.FC<IdProp> = ({ id }) => {
-  const dispatch = useDispatch();
-  const product = useSelector(selectProductById(id));
+  const dispatch = useAppDispatch();
+  const product = useAppSelector(selectProductById(id));
   const [name, setName] = useState(product.name);
   const [description, setDescription] = useState(product.description);
+  const isRequesting = product.status?.state === RequestStatus.Requesting;
 
   const onDeleteProduct = (e: SyntheticEvent) => {
     e.preventDefault();
-    dispatch(productRemoved(product.id));
+    dispatch(deleteProduct(product));
   };
 
   const onCancelProduct = (e: SyntheticEvent) => {
@@ -28,32 +35,59 @@ const ProductItem: React.FC<IdProp> = ({ id }) => {
 
   const onSubmitSave = (e: SyntheticEvent) => {
     e.preventDefault();
-    dispatch(productChanged({ ...product, name, description }));
+    dispatch(updateProduct({ ...product, name, description }));
   };
 
   return (
     <li className={cx(styles.card, styles["shadow-box"])}>
-      <form className={styles.form} onSubmit={onSubmitSave}>
+      <form
+        className={cx(styles.form, {
+          [styles["is-requesting"]]: isRequesting,
+        })}
+        onSubmit={onSubmitSave}
+      >
         <textarea
           className={styles.title}
+          disabled={isRequesting}
           value={name}
           onChange={(e) => void setName(e.target.value)}
         />
         <textarea
           className={styles.description}
+          disabled={isRequesting}
           value={description}
           onChange={(e) => void setDescription(e.target.value)}
         />
         <div className={styles.buttonContainer}>
-          <button className={styles.delete} onClick={onDeleteProduct}>
+          <button
+            className={styles.delete}
+            disabled={isRequesting}
+            onClick={onDeleteProduct}
+          >
             Delete
           </button>
-          <button className={styles.cancel} onClick={onCancelProduct}>
+          <button
+            className={styles.cancel}
+            disabled={isRequesting}
+            onClick={onCancelProduct}
+          >
             Cancel
           </button>
-          <input type="submit" className={styles.submit} value="Save" />
+          <input
+            type="submit"
+            className={styles.submit}
+            disabled={isRequesting}
+            value="Save"
+          />
         </div>
       </form>
+      <div
+        className={cx(styles.requesting, {
+          [styles["is-requesting"]]: isRequesting,
+        })}
+      >
+        <Loader type="Bars" color="#00BFFF" height={40} />
+      </div>
     </li>
   );
 };
