@@ -1,0 +1,178 @@
+.delete,
+.cancel,
+.submit,
+.inverse {
+  @apply px-4 py-2 text-center rounded-md text-white;
+  height: 40px;
+  transition: all 1s ease;
+}
+.delete.is-disabled, .delete:disabled,
+.cancel.is-disabled,
+.cancel:disabled,
+.submit.is-disabled,
+.submit:disabled,
+.inverse.is-disabled,
+.inverse:disabled {
+  @apply bg-gray-400;
+}
+
+.delete {
+  @apply bg-red-500;
+}
+.delete:hover:enabled {
+  @apply bg-red-600;
+}
+
+.cancel {
+  @apply ml-auto mr-2 bg-white;
+  color: #696969;
+  box-shadow: 0 4px 14px 0 rgba(0, 0, 0, 0.1);
+}
+.cancel:hover:enabled {
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 6px 20px rgba(93, 93, 93, 0.23);
+}
+
+.submit {
+  @apply cursor-pointer;
+  background-color: #0070f3;
+  box-shadow: 0 4px 14px 0 rgba(0, 118, 255, 0.39);
+}
+.submit:hover:enabled {
+  background: rgba(0, 118, 255, 0.9);
+  box-shadow: 0 6px 20px rgba(0, 118, 255, 0.23);
+}
+
+.inverse {
+  @apply bg-transparent;
+  border: 1px solid rgba(0, 118, 255, 0.9);
+  color: rgba(0, 118, 255, 0.9);
+  transition: all 0.2s ease;
+}
+.inverse:hover:enabled {
+  color: white;
+  background-color: rgba(0, 118, 255, 0.9);
+}
+
+.shadow-box {
+  @apply outline-none rounded-md;
+  box-shadow: 0px 4px 20px 10px rgba(219, 234, 254, 0.3);
+  transition: all 0.5s ease;
+}
+.shadow-box:focus, .shadow-box:hover {
+  box-shadow: 0px 4px 20px 10px rgba(219, 234, 254, 0.5);
+}
+
+.bottom-line-input, .container .search {
+  @apply text-gray-500 border-b-2 outline-none;
+  transition: all 0.3s ease;
+}
+.bottom-line-input:hover, .container .search:hover {
+  @apply border-blue-200;
+}
+.bottom-line-input:focus, .container .search:focus {
+  @apply border-blue-500;
+}
+
+.container {
+  @apply w-full h-full relative flex flex-col justify-start items-center gap-10;
+}
+.container .addProductModal {
+  @apply absolute self-end top-4 right-4;
+}
+.container .search {
+  @apply mt-8;
+  width: 500px;
+  font-size: 2.5em;
+}
+.container .cards {
+  @apply w-full flex-grow grid flex-wrap justify-center items-center gap-10 px-10;
+  grid-template-columns: repeat(auto-fit, 300px);
+}
+.container .cards .card {
+  @apply relative;
+  width: 300px;
+  height: 370px;
+}
+.container .cards .card .form {
+  @apply h-full flex flex-col py-6 px-4 outline-none bg-white rounded-md overflow-y-auto;
+  transition: all 0.3s ease;
+}
+.container .cards .card .form.is-requesting {
+  filter: blur(0.1em);
+}
+.container .cards .card .form .title {
+  @apply font-bold mb-3;
+  flex-basis: 30%;
+}
+.container .cards .card .form .description {
+  @apply resize-none;
+  flex-basis: 100%;
+}
+.container .cards .card .form .title,
+.container .cards .card .form .description {
+  @apply p-1 border-2 border-transparent rounded-md outline-none resize-none;
+}
+.container .cards .card .form .title:hover:enabled,
+.container .cards .card .form .description:hover:enabled {
+  @apply border-blue-300;
+}
+.container .cards .card .form .title:focus:enabled,
+.container .cards .card .form .description:focus:enabled {
+  @apply border-blue-500;
+}
+.container .cards .card .form .buttonContainer {
+  @apply flex flex-row justify-between mt-4;
+}
+.container .cards .card .requesting {
+  @apply absolute opacity-0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 0.3s ease;
+}
+.container .cards .card .requesting.is-requesting {
+  @apply opacity-100;
+}
+.container .pagination {
+  @apply flex flex-row justify-center items-center gap-1 pb-4;
+}
+.container .pagination .inverse {
+  @apply w-28 px-6 rounded-3xl;
+}
+.container .pagination .bottom-line-input, .container .pagination .search {
+  @apply w-10 text-center text-lg;
+}
+.container .pagination input::-webkit-outer-spin-button,
+.container .pagination input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.container .pagination input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.addProductContainer {
+  @apply flex flex-col gap-5 p-4 pb-0;
+  width: 400px;
+}
+.addProductContainer .title {
+  @apply pl-4 pt-2 border-blue-100 rounded-md;
+  min-height: 45px;
+}
+.addProductContainer .description {
+  @apply pl-4 pt-2 border-blue-100 rounded-md;
+  min-height: 100px;
+}
+.addProductContainer .title,
+.addProductContainer .description {
+  @apply border-2 outline-none;
+}
+.addProductContainer .title:hover, .addProductContainer .title:focus,
+.addProductContainer .description:hover,
+.addProductContainer .description:focus {
+  @apply border-blue-500;
+}
+.addProductContainer .submit {
+  @apply self-stretch;
+}

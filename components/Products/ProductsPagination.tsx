@@ -88,12 +88,13 @@ const ProductsPagination: React.FC = () => {
       <form onSubmit={(e) => void e.preventDefault()}>
         <input
           placeholder="Search"
+          data-cy="search"
           className={styles.search}
           onChange={onSearchInputChanged}
           value={search}
         />
       </form>
-      <ul className={styles.cards}>
+      <ul data-cy="products" className={styles.cards}>
         {products.map((product) => (
           <ProductItem key={product.id} id={product.id} />
         ))}
@@ -102,17 +103,26 @@ const ProductsPagination: React.FC = () => {
         className={styles.pagination}
         onSubmit={(e) => void e.preventDefault()}
       >
-        <button className={styles.inverse} onClick={OnPrevClicked}>
+        <button
+          data-cy="prev-page-btn"
+          className={styles.inverse}
+          onClick={OnPrevClicked}
+        >
           Prev
         </button>
         <input
           type="number"
+          data-cy="page-input"
           className={styles["bottom-line-input"]}
           onChange={onPageInputChanged}
           onFocus={(e) => void e.target.select()}
           value={curPageState}
         />
-        <button className={styles.inverse} onClick={OnNextClicked}>
+        <button
+          data-cy="next-page-btn"
+          className={styles.inverse}
+          onClick={OnNextClicked}
+        >
           Next
         </button>
       </form>

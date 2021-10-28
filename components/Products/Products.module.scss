@@ -16,7 +16,9 @@
    }
 
    .cards {
-       @apply flex flex-wrap gap-10 m-auto px-10;
+       @apply w-full flex-grow grid flex-wrap justify-center items-center gap-10 px-10;
+
+       grid-template-columns: repeat(auto-fit, 300px);
 
        .card {
            @apply relative;

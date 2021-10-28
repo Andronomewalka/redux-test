@@ -54,7 +54,7 @@ const Header: React.FC<ClassNameProp> = ({ className }) => {
   }, [email]);
 
   return (
-    <header className={styles.header}>
+    <header data-testid="header" className={styles.header}>
       <b className={styles.email}>{isSignedIn ? email : ""}</b>
       <ul className={styles.navigationItems}>
         {navigationItems.map((item) => (
