@@ -34,13 +34,15 @@ const ProductsPagination: React.FC = () => {
   const isSearchUpdatedRef = useRef(true);
 
   useEffect(() => {
-    dispatch(
-      fetchProductsBySearch({
-        search: searchDebounced,
-        page: isSearchUpdatedRef.current ? 1 : curPageStateDebounced,
-      })
-    );
-    if (isSearchUpdatedRef.current) setPageState(1);
+    if (curPageStateDebounced > 0) {
+      dispatch(
+        fetchProductsBySearch({
+          search: searchDebounced,
+          page: isSearchUpdatedRef.current ? 1 : curPageStateDebounced,
+        })
+      );
+      if (isSearchUpdatedRef.current) setPageState(1);
+    }
   }, [isSearchUpdatedRef, searchDebounced, curPageStateDebounced]);
 
   useEffect(() => {
@@ -51,26 +53,16 @@ const ProductsPagination: React.FC = () => {
 
   const OnNextClicked = (e: SyntheticEvent) => {
     e.preventDefault();
-    dispatch(
-      fetchProductsBySearch({
-        search: searchDebounced,
-        page: curPageStateDebounced + 1,
-      })
-    );
     isSearchUpdatedRef.current = false;
-    setPageState(curPageStateDebounced + 1);
+    setPageState(curPageState + 1);
   };
 
   const OnPrevClicked = (e: SyntheticEvent) => {
     e.preventDefault();
-    dispatch(
-      fetchProductsBySearch({
-        search: searchDebounced,
-        page: curPageStateDebounced - 1,
-      })
-    );
-    isSearchUpdatedRef.current = false;
-    setPageState(curPageStateDebounced - 1);
+    if (curPageState - 1 > 0) {
+      isSearchUpdatedRef.current = false;
+      setPageState(curPageState - 1);
+    }
   };
 
   const onPageInputChanged = (e: ChangeEvent<HTMLInputElement>) => {

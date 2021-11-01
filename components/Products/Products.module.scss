@@ -125,6 +125,8 @@
     .title,
     .description {
         @apply border-2 outline-none;
+
+        height: 45px;
         
         &:hover,
         &:focus {

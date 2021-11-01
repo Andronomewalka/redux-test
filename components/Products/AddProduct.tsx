@@ -25,6 +25,7 @@ const AddProductModal: React.FC<AddProductModalProp> = ({ onSubmit }) => {
         className={styles.title}
         value={name}
         onChange={(e) => void setName(e.target.value)}
+        autoFocus={true}
       />
       <textarea
         placeholder="Description"
