@@ -17,7 +17,8 @@ import { useAppDispatch } from "hooks/useAppDispatch";
 const rawNavigationItems: NavigationProp[] = [
   { id: 0, title: "Products", route: "products" },
   { id: 1, title: "Posts", route: "posts" },
-  { id: 2, title: "Auth", route: "auth" },
+  { id: 2, title: "Chatik", route: "chatik" },
+  { id: 3, title: "Auth", route: "auth" },
 ];
 
 const Header: React.FC<ClassNameProp> = ({ className }) => {
@@ -52,6 +53,14 @@ const Header: React.FC<ClassNameProp> = ({ className }) => {
   useEffect(() => {
     dispatch(fetchLastUsedEmail());
   }, [email]);
+
+  useEffect(() => {
+    const authItem = navigationItems.find((item) => item.route === "auth");
+    if (authItem) {
+      authItem.title = isSignedIn ? "Sign Out" : "Auth";
+      setNavigationItems([...navigationItems]);
+    }
+  }, [isSignedIn]);
 
   return (
     <header data-testid="header" className={styles.header}>

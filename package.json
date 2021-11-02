@@ -26,7 +26,8 @@
     "react-transition-group": "^4.4.2",
     "sass": "^1.42.1",
     "tailwindcss": "^2.2.16",
-    "yup": "^0.32.11"
+    "yup": "^0.32.11",
+    "zxcvbn": "^4.4.2"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.14.1",
@@ -37,6 +38,7 @@
     "@types/react-redux": "^7.1.19",
     "@types/react-transition-group": "^4.4.4",
     "@types/yup": "^0.29.13",
+    "@types/zxcvbn": "^4.4.1",
     "autoprefixer": "^10.3.7",
     "babel-jest": "^27.3.1",
     "cypress": "^8.7.0",

@@ -1,4 +1,4 @@
-import React, { useEffect, RefObject } from "react";
+import { useEffect, RefObject } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { FormikHelpers, FormikProps } from 'formik'
@@ -20,7 +20,7 @@ import { RequestStatus } from "utils/requestStatus";
 export const useAuth = <T>(formikRef: RefObject<FormikProps<SubmitProp<T>>>): UseAuthResult  => {
   const dispatch = useDispatch();
   const router = useRouter();
-  const isSignedIn = useSelector(selectIsSignedIn);
+  const isSignedIn = useAppSelector(selectIsSignedIn);
   const [email, status, error] = useMultipleSelector<string, string>(
     selectEmail,
     selectFetchStatus,
@@ -29,7 +29,7 @@ export const useAuth = <T>(formikRef: RefObject<FormikProps<SubmitProp<T>>>): Us
 
   useEffect(() => {
     if (isSignedIn) {
-      router.push("/products");
+      router.push("/chatik");
     }
   }, [isSignedIn]);
 

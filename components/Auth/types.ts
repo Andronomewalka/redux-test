@@ -1,4 +1,5 @@
 import { FormikHelpers } from 'formik'
+import { IdProp } from 'utils/basePropTypes';
 
 export interface SignInFormValues {
     email: string;
@@ -25,4 +26,15 @@ export interface UseAuthResult {
     validationError: string,
     onSignInSubmit(data: SignInFormValues, actions: FormikHelpers<SignInFormValues>): void,
     onSignUpSubmit(data: SignUpFormValues, actions: FormikHelpers<SignUpFormValues>): void,
+}
+export interface ValidationRule extends IdProp {
+  text: string,
+  validate(input: string): boolean
+  isValid: boolean
+}
+
+export interface SignUpPasswordValidationProp {
+  rules: ValidationRule[], 
+  score: number,
+  isPasswordEmpty: boolean
 }

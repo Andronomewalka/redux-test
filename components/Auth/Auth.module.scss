@@ -1,19 +1,18 @@
 @import "../../styles/_shared.scss";
 
+$input-width: 350px;
+
 .container {
     @apply h-full flex flex-col justify-center items-center p-4;
 
-    * {
-        min-width: 350px;
-    }
-
     .label {
-        @apply mb-5;
+        @apply relative mb-5;
     }
 
     .input {
         @apply block pl-4 py-2 my-1 outline-none border-2 border-blue-100 rounded-md;
 
+        width: $input-width;
         height: 45px;
 
         &:hover, 
@@ -29,16 +28,21 @@
 
     .submit {
         @apply mt-4;
+        
+        width: $input-width;
     }
 
     .requestInfoContainer {
-        @apply h-10 mt-5;
+        @apply relative h-10 mt-5;
     }
 
     .requesting,
     .error {
-        @apply opacity-0;
+        @apply absolute opacity-0;
 
+        top:50%;
+        left:50%;
+        transform: translate(-50%, -50%);
         transition: opacity .5s ease;
 
         &.is-visible {
@@ -46,13 +50,40 @@
         }
     }
 
-    .requesting {
-        width: 100px;
-    }
-
     .error {
         @apply text-center;
 
-        transform: translateY(-33px)
+        width: $input-width;
+    }
+
+    .passValidationContainer {
+        @apply px-4 pt-2;
+
+        width: 350px;
+
+        .validationScoreContainer {
+            @apply grid gap-2 h-1 mb-2 mt-1;
+
+            grid-template-columns: repeat(3, 1fr);
+
+            * {
+                @apply rounded-md;
+            }
+        }
+        
+        .validationList {
+            @apply grid flex-wrap;
+
+            grid-template-columns: repeat(2, 1fr);
+            font-size: 0.85em;
+
+            .validationItem {
+                @apply text-gray-600;
+
+                &.is-valid {
+                    @apply text-green-600;
+                }
+            }
+        }
     }
 }
