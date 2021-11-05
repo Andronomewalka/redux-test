@@ -5,14 +5,14 @@ import cx from "classnames";
 import SignIn from "components/Auth/SignIn";
 import SignUp from "components/Auth/SignUp";
 import styles from "./Auth.module.scss";
-import { validationErrorChanged } from "state/auth";
+import { errorChanged } from "state/auth";
 
 const AuthPage: NextPage = () => {
   const dispatch = useDispatch();
   const [isSignIn, setIsSignIn] = useState(true);
 
   const onChangeView = () => {
-    dispatch(validationErrorChanged(""));
+    dispatch(errorChanged(""));
     setIsSignIn(!isSignIn);
   };
 

@@ -10,8 +10,9 @@ import styles from "./Auth.module.scss";
 
 const SignIn: React.FC<ClassNameProp> = ({ className }) => {
   const formikRef = useRef(null);
-  const { email, status, error, validationError, onSignInSubmit } =
-    useAuth<SignInFormValues>(formikRef);
+  const { email, status, error, onSignInSubmit } = useAuth<SignInFormValues>(
+    formikRef
+  );
 
   return (
     <div className={className}>
@@ -63,11 +64,10 @@ const SignIn: React.FC<ClassNameProp> = ({ className }) => {
               <div
                 className={cx(styles.error, {
                   [styles["is-visible"]]:
-                    status !== RequestStatus.Requesting &&
-                    (validationError || error),
+                    status !== RequestStatus.Requesting && error,
                 })}
               >
-                {validationError || error}
+                {error}
               </div>
             </div>
           </Form>

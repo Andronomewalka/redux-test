@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form, Field, FormikProps } from "formik";
 import cx from "classnames";
 import Loader from "react-loader-spinner";
 import zxcvbn from "zxcvbn";
@@ -43,8 +43,8 @@ const initialValidationRules: ValidationRule[] = [
 ];
 
 const SignUp: React.FC<ClassNameProp> = ({ className }) => {
-  const formikRef = useRef(null);
-  const { email, status, error, validationError, onSignUpSubmit } =
+  const formikRef = useRef<FormikProps<SignUpFormValues>>(null);
+  const { email, status, error, onSignUpSubmit } =
     useAuth<SignUpFormValues>(formikRef);
 
   const [validationRules, setValidationRules] = useState(
@@ -70,7 +70,7 @@ const SignUp: React.FC<ClassNameProp> = ({ className }) => {
     setPasswordScore(rawPasswordScore);
     setValidationRules([...validationRules]);
     setTimeout(() => {
-      formikRef.current.validateField("confPassword");
+      formikRef.current?.validateField("confPassword");
     }, 50);
 
     const allValid = validationRules.every((rule) => rule.isValid);
@@ -172,11 +172,10 @@ const SignUp: React.FC<ClassNameProp> = ({ className }) => {
               <div
                 className={cx(styles.error, {
                   [styles["is-visible"]]:
-                    status !== RequestStatus.Requesting &&
-                    (validationError || error),
+                    status !== RequestStatus.Requesting && error,
                 })}
               >
-                {validationError || error}
+                {error}
               </div>
             </div>
           </Form>

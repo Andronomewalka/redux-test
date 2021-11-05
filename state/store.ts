@@ -20,8 +20,6 @@ const store = configureStore({
     .concat(postApi.middleware),
 });
 
-const setupStore = () => store
-
 export default store;
 
 export type RootState = ReturnType<typeof store.getState>;

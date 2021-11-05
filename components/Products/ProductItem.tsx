@@ -18,9 +18,9 @@ import { infoAdded, InfoStatus } from "state/info";
 const ProductItem: React.FC<IdProp> = ({ id }) => {
   const dispatch = useAppDispatch();
   const product = useAppSelector(selectProductById(id));
-  const [name, setName] = useState(product.name);
-  const [description, setDescription] = useState(product.description);
-  const isRequesting = product.status?.state === RequestStatus.Requesting;
+  const [name, setName] = useState(product?.name);
+  const [description, setDescription] = useState(product?.description);
+  const isRequesting = product?.status?.state === RequestStatus.Requesting;
 
   const onDeleteProduct = (e: SyntheticEvent) => {
     e.preventDefault();

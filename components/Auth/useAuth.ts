@@ -8,16 +8,15 @@ import { useAppSelector } from "hooks/useAppSelector";
 import {
   signIn,
   signUp,
-  validationErrorChanged,
+  errorChanged,
   selectEmail,
   selectFetchStatus,
   selectError,
-  selectValidationError,
   selectIsSignedIn,
 } from "state/auth";
 import { RequestStatus } from "utils/requestStatus";
 
-export const useAuth = <T>(formikRef: RefObject<FormikProps<SubmitProp<T>>>): UseAuthResult  => {
+export const useAuth = <T>(formikRef: RefObject<FormikProps<T>>): UseAuthResult  => {
   const dispatch = useDispatch();
   const router = useRouter();
   const isSignedIn = useAppSelector(selectIsSignedIn);
@@ -26,7 +25,7 @@ export const useAuth = <T>(formikRef: RefObject<FormikProps<SubmitProp<T>>>): Us
     selectFetchStatus,
     selectError
   );
-
+  
   useEffect(() => {
     if (isSignedIn) {
       router.push("/chatik");
@@ -36,8 +35,6 @@ export const useAuth = <T>(formikRef: RefObject<FormikProps<SubmitProp<T>>>): Us
   useEffect(() => {
     formikRef.current?.setFieldValue("email", email);
   }, [email]);
-
-  const validationError = useSelector(selectValidationError);
 
   const onSignInSubmit = (data: SignInFormValues, {setSubmitting}: FormikHelpers<SignInFormValues>) => {
     setSubmitting(true);
@@ -53,7 +50,7 @@ export const useAuth = <T>(formikRef: RefObject<FormikProps<SubmitProp<T>>>): Us
       if (data.password === data.confPassword) {
         await dispatch(signUp(data));
       } else {
-        dispatch(validationErrorChanged("passwords not equal"));
+        dispatch(errorChanged("passwords not equal"));
       }
       setSubmitting(false);
     })();
@@ -63,7 +60,6 @@ export const useAuth = <T>(formikRef: RefObject<FormikProps<SubmitProp<T>>>): Us
     email,
     status,
     error,
-    validationError,
     onSignInSubmit,
     onSignUpSubmit,
   };

@@ -2,12 +2,7 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
-import {
-  selectEmail,
-  selectIsSignedIn,
-  signOut,
-  fetchLastUsedEmail,
-} from "state/auth";
+import { selectEmail, selectIsSignedIn, signOut } from "state/auth";
 import styles from "./Header.module.scss";
 import { useAppSelector } from "hooks/useAppSelector";
 import { NavigationProp } from "./types";
@@ -49,10 +44,6 @@ const Header: React.FC<ClassNameProp> = ({ className }) => {
     });
     setNavigationItems(rawNavigationItems);
   }, []);
-
-  useEffect(() => {
-    dispatch(fetchLastUsedEmail());
-  }, [email]);
 
   useEffect(() => {
     const authItem = navigationItems.find((item) => item.route === "auth");

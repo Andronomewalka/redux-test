@@ -3,7 +3,6 @@ import { RequestStatus } from "utils/requestStatus"
 
 export interface UserState {
     email: string,
-    validationError: string,
     isSignedIn: boolean,
     status: RequestStatus,
     error: string,
@@ -12,9 +11,19 @@ export interface UserState {
 export interface User {
     email: string,
     password: string,
-    isSignedIn?: boolean
 }
 
-export interface ResponseSignInResult extends ResponseResult<string> {
-    validationError?: string
+
+export interface UserDTO {
+    email: string,
+    hash: string,
+}
+
+export interface ResponseSignInDTO {
+    accessToken: string,
+    email: string
+}
+
+export interface ResponseSignInResult extends ResponseResult<ResponseSignInDTO> {
+    error?: string
 }

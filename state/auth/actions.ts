@@ -1,11 +1,11 @@
 import { CaseReducer, PayloadAction } from "@reduxjs/toolkit"
 import { UserState } from './types'
 
-export const validationErrorChangedCase: CaseReducer<UserState, PayloadAction<string>> = (state, action) => {
-  state.validationError = action.payload; 
+export const errorChangedCase: CaseReducer<UserState, PayloadAction<string>> = (state, action) => {
+  state.error = action.payload; 
 }
 
 export const signOutCase: CaseReducer<UserState> = (state) => {
-  state.isSignedIn = false;
   state.email = "";
+  state.error = "";
 }
